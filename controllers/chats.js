@@ -18,6 +18,15 @@ const index = async (req, res) => {
     }
 }
 
+const show = async (req, res) => {
+    try {
+        const chat = await Chat.findById(req.params.chatId)
+        res.status(200).json(chat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    create, index,
+    create, index, show,
 }
