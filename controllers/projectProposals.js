@@ -9,6 +9,15 @@ const create = async (req, res) => {
     }
 }
 
+const index = async (req, res) => {
+    try {
+        const projectProposal = await ProjectProposal.find({})
+        res.status(200).json(projectProposal)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    create, 
+    create, index
 }
