@@ -18,6 +18,15 @@ const index = async (req, res) => {
     }
 }
 
+const show = async (req, res) => {
+    try {
+        const projectProposal = await projectProposal.findById(req.params.projectProposalId)
+        res.status(200).json(projectProposal)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    create, index
+    create, index, show
 }
