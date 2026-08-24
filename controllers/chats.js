@@ -27,6 +27,15 @@ const show = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const updatedChat = await Chat.findByIdAndUpdate(req.params.chatId, req.body, { new: true })
+        res.status(200).json(updatedChat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    create, index, show,
+    create, index, show, update,
 }
