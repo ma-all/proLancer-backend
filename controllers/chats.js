@@ -1,0 +1,50 @@
+const Chat = require('../models/chat')
+
+const create = async (req, res) => {
+    try {
+        const chat = await Chat.create(req.body)
+        res.status(201).json(chat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+const index = async (req, res) => {
+    try {
+        const chat = await Chat.find({})
+        res.status(200).json(chat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+const show = async (req, res) => {
+    try {
+        const chat = await Chat.findById(req.params.chatId)
+        res.status(200).json(chat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+const update = async (req, res) => {
+    try {
+        const updatedChat = await Chat.findByIdAndUpdate(req.params.chatId, req.body, { new: true })
+        res.status(200).json(updatedChat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+const deleteChat = async (req, res) => {
+    try {
+        const deletedChat = await Chat.findByIdAndDelete(req.params.chatId)
+        res.status(200).json(deletedChat)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+} 
+
+module.exports = {
+    create, index, show, update, deleteChat,
+}
