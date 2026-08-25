@@ -36,6 +36,9 @@ app.post('/auth/sign-in', authCtrl.signIn)
 app.post('/user', verifyToken, usersCtrl.create)
 app.get('/user/:userId', verifyToken, usersCtrl.show)
 app.put('/user/:userId', verifyToken, usersCtrl.update)
+app.delete('/user/:userId/github', verifyToken, usersCtrl.deleteGithubLink)
+app.delete('/user/:userId/deployed', verifyToken, usersCtrl.deleteDeployedLink)
+app.delete('/user/:userId/skill', verifyToken, usersCtrl.deleteSkill)
 // app.delete('/user/:userId', verifyToken, usersCtrl.deletee)
 
 
