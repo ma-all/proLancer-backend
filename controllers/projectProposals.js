@@ -2,6 +2,9 @@ const ProjectProposal = require('../models/projectProposal')
 
 const create = async (req, res) => {
     try {
+
+        req.body.username = req.user._id
+
         const projectProposal = await ProjectProposal.create(req.body)
         res.status(201).json(projectProposal)
     } catch (error) {

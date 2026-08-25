@@ -55,8 +55,9 @@ app.delete('/projectProposal/:projectProposalId', verifyToken, projectProposalCt
 app.post('/chat', verifyToken, chatCtrl.create)
 app.get('/chat', verifyToken, chatCtrl.index)
 app.get('/chat/:chatId', verifyToken, chatCtrl.show)
-app.put('/chat/:chatId', verifyToken, chatCtrl.update)
-app.delete('/chat/:chatId', verifyToken, chatCtrl.deleteChat)
+// app.put('/chat/:chatId', verifyToken, chatCtrl.update)
+// app.delete('/chat/:chatId', verifyToken, chatCtrl.deleteChat)
+app.post('/chat/:chatId/messages', verifyToken, chatCtrl.sendMessage)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)
