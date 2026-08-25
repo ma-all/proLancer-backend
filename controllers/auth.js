@@ -33,23 +33,32 @@ const signUp = async (req, res) => {
             return res.status(409).json({ err: 'Username already taken.' })
         }
 
+        const emailInDatabase = await User.findOne({
+            email: req.body.email
+        })
+        if (emailInDatabase) {
+            return res.status(409).json({ err: 'Email already exists.' })
+        }
+
         // creates user
         const hashedPassword = bcrypt.hashSync(req.body.password, 10)
 
         const userData = {
             username: req.body.username,
             password: hashedPassword,
+            email: req.body.email,
+            role: req.body.role,
         }
 
         const user = await User.create(userData)
 
         // create the payload
-        const payload = { username: user.username, _id: user._id }
+        const payload = { username: user.username, _id: user._id, role: user.role }
 
         // create the token with payload + secret
         const token = jwt.sign({payload}, process.env.JWT_SECRET)
 
-        res.status(201).json({ token })
+        res.status(201).json({ token, user })
     } catch(err) {
         res.status(400).json({ err: err.message })
     }
@@ -73,10 +82,10 @@ const signIn = async (req, res) => {
             return res.status(401).json({ err: 'Login failed. Please try again.' })
         }
 
-        const payload = { username: userInDatabase.username, _id: userInDatabase._id }
+        const payload = { username: userInDatabase.username, _id: userInDatabase._id, role: userInDatabase.role }
         const token = jwt.sign({ payload }, process.env.JWT_SECRET)
 
-        res.status(200).json({ token })
+        res.status(200).json({ token, user: userInDatabase })
 
     } catch (err) {
         res.status(500).json({ err: err.message })
