@@ -20,7 +20,8 @@ const projectProposalSchema = new mongoose.Schema({
     },
     features: {
         type: String,
-        enum: ['ill add it later', 'ill add it later'],
+        // enum: ['ill add it later', 'ill add it later'],
+        required: true,
     },
     theme: {
         type: String,

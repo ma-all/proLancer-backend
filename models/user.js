@@ -20,18 +20,16 @@ const userSchema = new mongoose.Schema({
         enum: ['Business Owner', 'Developer']
     },
 
-
     businessDescription: {
         type: String,
     
     },
     businessCategory:{
         type:String,
-        enum: ['Video player', 'Cards', 'Reviews', 'Faq', 'Contact', 'Image']
-
+        enum: ['Cafe', 'Restaurant', 'Bakery', 'Catering', 'Jewelry', 'Cosmetics', 'Clothing', 'Footware', 'Photo & Videography', 'Event Planning', 'Beauty Salon', 'Spa', 'Tech Equipment', 'Equipment & Machinery', 'Gym', 'Art Studio', 'Handmade Crafts', 'Interior Design', 'Furniture & Home Decor', 'Architecture', 'Stationary', 'Medical Clinic', 'Pharmacy', 'Dental Clinic', 'Fitness & Health', 'Other'],
+        default: 'Other'
     },
-
-    
+ 
     developerDescription:{
         type:String
     },
@@ -46,7 +44,7 @@ const userSchema = new mongoose.Schema({
 
     skills: [{
         type:String,
-        enum:['Full stack', 'Front end', 'Back end', 'Sql','Java','C++']
+        enum:['HTML', 'CSS', 'JavaScript', 'TypeScript','React','BootStrap', 'SCSS', 'Angular', 'Node.js', 'Python', 'Java', 'C#', 'Express.js', 'Django', 'MongoDB', 'PHP', 'PostgreSQL', 'JWT Authentication', 'WebSockets', 'GitHub', 'Firebase', 'Cloudinary', 'Stripe']
     }],
 
     projectProposals: [
