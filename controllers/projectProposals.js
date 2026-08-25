@@ -20,7 +20,7 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
     try {
-        const projectProposal = await projectProposal.findById(req.params.projectProposalId)
+        const projectProposal = await ProjectProposal.findById(req.params.projectProposalId)
         res.status(200).json(projectProposal)
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -29,7 +29,7 @@ const show = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const updateProjectProposal = await ProjectProposal.findByIdAndUpdate(req.params.projectProposal, req.body, { new: true })
+        const updateProjectProposal = await ProjectProposal.findByIdAndUpdate(req.params.projectProposalId, req.body, { new: true })
         res.status(200).json(updateProjectProposal)
     } catch (error) {
         res.status(500).json({ error: error.message })

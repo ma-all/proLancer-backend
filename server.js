@@ -9,11 +9,10 @@ const PORT = process.env.PORT ? process.env.PORT : "3000"
 
 const authCtrl = require('./controllers/auth')
 const usersCtrl = require('./controllers/users')
-
+const projectProposalCtrl = require('./controllers/projectProposals')
+const chatCtrl = require('./controllers/chats')
 
 const verifyToken = require('./middleware/verify-token')
-
-
 
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -34,10 +33,18 @@ app.post('/auth/sign-in', authCtrl.signIn)
 // app.get('/users', verifyToken, usersCtrl.index)
 
 //user router
-app.post('/users', verifyToken, usersCtrl.create)
-app.get('/users/:id', verifyToken, usersCtrl.show)
-app.put('/users/:id', verifyToken, usersCtrl.update)
-app.delete('/users/:id', verifyToken, usersCtrl.deletee)
+app.post('/user', verifyToken, usersCtrl.create)
+app.get('/user/:userId', verifyToken, usersCtrl.show)
+app.put('/user/:userId', verifyToken, usersCtrl.update)
+// app.delete('/user/:userId', verifyToken, usersCtrl.deletee)
+
+
+//project proposal routes
+app.post('/projectProposal', verifyToken, projectProposalCtrl.create)
+app.get('/projectProposal', verifyToken, projectProposalCtrl.index)
+app.get('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.show)
+app.put('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.update)
+app.delete('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.deleteProjectProposal)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)
