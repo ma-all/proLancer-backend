@@ -49,6 +49,13 @@ app.get('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.
 app.put('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.update)
 app.delete('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.deleteProjectProposal)
 
+//chat routes
+app.post('/chat', verifyToken, chatCtrl.create)
+app.get('/chat', verifyToken, chatCtrl.index)
+app.get('/chat/:chatId', verifyToken, chatCtrl.show)
+app.put('/chat/:chatId', verifyToken, chatCtrl.update)
+app.delete('/chat/:chatId', chatCtrl.deleteChat)
+
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)
 })
