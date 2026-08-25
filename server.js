@@ -41,7 +41,6 @@ app.delete('/user/:userId/deployed', verifyToken, usersCtrl.deleteDeployedLink)
 app.delete('/user/:userId/skill', verifyToken, usersCtrl.deleteSkill)
 // app.delete('/user/:userId', verifyToken, usersCtrl.deletee)
 
-
 //project proposal routes
 app.post('/projectProposal', verifyToken, projectProposalCtrl.create)
 app.get('/projectProposal', verifyToken, projectProposalCtrl.index)
@@ -54,7 +53,7 @@ app.post('/chat', verifyToken, chatCtrl.create)
 app.get('/chat', verifyToken, chatCtrl.index)
 app.get('/chat/:chatId', verifyToken, chatCtrl.show)
 app.put('/chat/:chatId', verifyToken, chatCtrl.update)
-app.delete('/chat/:chatId', chatCtrl.deleteChat)
+app.delete('/chat/:chatId', verifyToken, chatCtrl.deleteChat)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)

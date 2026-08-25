@@ -45,7 +45,9 @@ const deleteGithubLink = async (req, res) => {
         if (!user)
             return res.status(404).json({message:'user not found'})
 
-        user.githubUrl = ''
+        user.githubUrl = user.githubUrl.filter(link => 
+            link !== req.body.githubUrl
+        )
         await user.save()
         res.status(200).json(user)
     } catch (error) {
@@ -59,7 +61,14 @@ const deleteDeployedLink = async (req, res) =>{
         if (!user)
             return res.status(404).json({message:'user not found'})
 
-        user.deployedLinks = ''
+        if (req.body.link) {
+            user.deployedLinks = user.deployedLinks.filter(link => 
+                link !== req.body.link
+            )
+        } else {
+            user.deployedLinks = []
+        }
+
         await user.save()
         res.status(200).json(user)
     } catch (error) {

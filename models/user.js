@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
         required:true,
         enum: ['Client', 'Developer']
     },
+
+    
     businessDescription: {
         type: String,
     
@@ -28,23 +30,27 @@ const userSchema = new mongoose.Schema({
         enum: ['Video player', 'Cards', 'Reviews', 'Faq', 'Contact', 'Image']
 
     },
+
+    
     developerDescription:{
         type:String
     },
-    githubUrl:{
+
+    githubUrl: [{
         type:String
-    },
+    }],
+
     deployedLinks: [{
         type:String
     }],
 
-    skills: {
+    skills: [{
         type:String,
         enum:['Full stack', 'Front end', 'Back end', 'Sql','Java','C++']
-    },
+    }],
 
     projectProposals: [
-       { type: mongoose.Schema.type.ObjectId,
+       { type: mongoose.Schema.Types.ObjectId,
         ref: 'ProjectProposal'}
     ]
 
