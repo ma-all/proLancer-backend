@@ -50,6 +50,7 @@ app.get('/projectProposal', verifyToken, projectProposalCtrl.index)
 app.get('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.show)
 app.put('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.update)
 app.delete('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.deleteProjectProposal)
+app.put('/projectProposal/:projectProposalId/status', verifyToken, projectProposalCtrl.updateStatus)
 
 //chat routes
 app.post('/chat', verifyToken, chatCtrl.create)

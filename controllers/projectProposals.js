@@ -30,10 +30,31 @@ const show = async (req, res) => {
     }
 }
 
+//this one is for the business owner in case they edit the details 
 const update = async (req, res) => {
     try {
         const updateProjectProposal = await ProjectProposal.findByIdAndUpdate(req.params.projectProposalId, req.body, { new: true })
+        if (!updateProjectProposal) 
+            return res.status(404).json({ error: 'project proposal not found.'})
+        
         res.status(200).json(updateProjectProposal)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+//for developer to accept or reject a project proposal
+const updateStatus = async (req, res) => {
+    try {
+        const { status } = req.body
+        const userId = req.user._id || req.user.payload?._id
+        const validStatus = ['Pending', 'Accepted', 'Rejected', 'In Progress', 'Completed']
+        if (!validStatus.includes(status)) 
+            return res.status(400).json({ error: 'invalid status'})
+        const updatedProjectProposal = await ProjectProposal.findByIdAndUpdate(req.params.projectProposalId, { status: status }, { new: true })
+        if (!updatedProjectProposal)
+            return res.status(404).json({ error: 'project proposal not found.'})
+        res.status(200).json(updatedProjectProposal)
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
@@ -49,5 +70,5 @@ const deleteProjectProposal = async (req, res) => {
 }
 
 module.exports = {
-    create, index, show, update, deleteProjectProposal,
+    create, index, show, update, deleteProjectProposal, updateStatus,
 }

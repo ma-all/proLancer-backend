@@ -24,6 +24,11 @@ const projectProposalSchema = new mongoose.Schema({
     },
     theme: {
         type: String,
+    },
+    status: {
+        type: String,
+        enum: ['Pending', 'Accepted', 'Rejected', 'In Progress', 'Completed'],
+        default: 'Pending'
     }
 }, {timestamps: true})
 
