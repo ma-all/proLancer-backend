@@ -17,10 +17,10 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         required:true,
-        enum: ['Client', 'Developer']
+        enum: ['Business Owner', 'Developer']
     },
 
-    
+
     businessDescription: {
         type: String,
     

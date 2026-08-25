@@ -1,17 +1,17 @@
 const User = require('../models/user')
 
 //create a new user
-const create = async (req, res)=>{
-    try {
-        const saveUser = await User.create(req.body)
-        res.status(201).json(saveUser)
-    } catch (error) {
-        res.status(500).json({message : error.message})
+// const create = async (req, res)=>{
+//     try {
+//         const saveUser = await User.create(req.body)
+//         res.status(201).json(saveUser)
+//     } catch (error) {
+//         res.status(500).json({message : error.message})
         
-    }
-}
+//     }
+// }
 
-//singel user
+//user profile
 const show = async (req, res)=>{
     try {
         const user = await User.findById(req.params.userId)
@@ -25,10 +25,10 @@ const show = async (req, res)=>{
 
 }
 
-//update user
+//update prf
 const update = async(req, res)=>{
     try {
-        const updateUser = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true })
+        const updateUser = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true, runValidators: true })
 
     if(!updateUser)
         return res.status(404).json({message:'user not found'})
@@ -78,13 +78,13 @@ const deleteDeployedLink = async (req, res) =>{
 
 const deleteSkill = async (req, res) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findByIdAndUpdate(req.params.userId, {$pull: { skills: req.body.skill}}, { new: true })
         if (!user)
             return res.status(404).json({message:'user not found'})
 
-        user.skills = user.skills.filter(skill => 
-            skill !== req.body.skill)
-        await user.save()
+        // user.skills = user.skills.filter(skill => 
+        //     skill !== req.body.skill)
+        // await user.save()
         res.status(200).json(user)
     } catch (error) {
         res.status(500).json({message:error.message})
@@ -92,7 +92,7 @@ const deleteSkill = async (req, res) => {
 }
 
 module.exports = {
-    create,  show, update, deleteGithubLink, deleteDeployedLink, deleteSkill,
+    show, update, deleteGithubLink, deleteDeployedLink, deleteSkill,
  }
 
 //CODE GRAVEYARD

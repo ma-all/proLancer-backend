@@ -36,7 +36,7 @@ app.post('/auth/sign-in', authCtrl.signIn)
 // app.get('/users', verifyToken, usersCtrl.index)
 
 //user router
-app.post('/user', verifyToken, usersCtrl.create)
+// app.post('/user', verifyToken, usersCtrl.create)
 app.get('/user/:userId', verifyToken, usersCtrl.show)
 app.put('/user/:userId', verifyToken, usersCtrl.update)
 app.delete('/user/:userId/github', verifyToken, usersCtrl.deleteGithubLink)
