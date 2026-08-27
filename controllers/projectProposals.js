@@ -3,7 +3,8 @@ const ProjectProposal = require('../models/projectProposal')
 const create = async (req, res) => {
     try {
 
-        req.body.username = req.user._id
+        const userId = req.user._id || req.user.payload?._id
+        req.body.businessOwner = userId
 
         const projectProposal = await ProjectProposal.create(req.body)
         res.status(201).json(projectProposal)
