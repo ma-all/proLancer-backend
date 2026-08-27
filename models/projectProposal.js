@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const projectProposalSchema = new mongoose.Schema({
-    username: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
+    // username: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     required: true,
+    // },
     name: {
         type: String,
         required: true,
@@ -25,6 +25,16 @@ const projectProposalSchema = new mongoose.Schema({
     },
     theme: {
         type: String,
+    },
+    businessOwner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    developer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
     status: {
         type: String,
