@@ -91,8 +91,17 @@ const deleteSkill = async (req, res) => {
     }
 }
 
+const indexDev = async (req, res) => {
+    try {
+        const developers = await User.find({ role: 'Developer' })
+        res.status(200).json(developers)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
+
 module.exports = {
-    show, update, deleteGithubLink, deleteDeployedLink, deleteSkill,
+    show, update, deleteGithubLink, deleteDeployedLink, deleteSkill, indexDev,
  }
 
 //CODE GRAVEYARD
