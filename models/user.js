@@ -30,16 +30,20 @@ const userSchema = new mongoose.Schema({
         default: 'Other'
     },
 
+    developerTitle: {
+        type: String,
+    },
+
     developerDescription: {
-        type: String
+        type: String,
     },
 
     githubUrl: [{
-        type: String
+        type: String,
     }],
 
     deployedLinks: [{
-        type: String
+        type: String,
     }],
 
     skills: [{
