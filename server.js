@@ -14,6 +14,7 @@ const authCtrl = require('./controllers/auth')
 const usersCtrl = require('./controllers/users')
 const projectProposalCtrl = require('./controllers/projectProposals')
 const chatCtrl = require('./controllers/chats')
+const paymentCtrl = require('./controllers/payments')
 
 const verifyToken = require('./middleware/verify-token')
 
@@ -60,6 +61,10 @@ app.get('/chat/:chatId', verifyToken, chatCtrl.show)
 // app.put('/chat/:chatId', verifyToken, chatCtrl.update)
 // app.delete('/chat/:chatId', verifyToken, chatCtrl.deleteChat)
 app.post('/chat/:chatId/messages', verifyToken, chatCtrl.sendMessage)
+
+//payment 
+app.post('/payment/createPayment', verifyToken, paymentCtrl.create)
+app.post('/payment/confirmPayment', verifyToken, paymentCtrl.confirm)
 
 app.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)

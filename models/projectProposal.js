@@ -17,10 +17,10 @@ const projectProposalSchema = new mongoose.Schema({
     budget: {
         type: Number,
         required: true,
+        min: 1,
     },
     features: {
         type: String,
-        // enum: ['ill add it later', 'ill add it later'],
         required: true,
     },
     theme: {
@@ -40,6 +40,15 @@ const projectProposalSchema = new mongoose.Schema({
         type: String,
         enum: ['Pending', 'Accepted', 'Rejected', 'In Progress', 'Completed'],
         default: 'Pending'
+    },
+    paymentStatus: {
+        type: String, 
+        enum: ['Paid', 'Unpaid'],
+        default: 'Unpaid',
+    },
+    paymentId: {
+        type: String,
+        default: null,
     }
 }, {timestamps: true})
 
