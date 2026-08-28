@@ -20,7 +20,6 @@ const create = async (req, res) => {
         }
 
         const fullAmount = Math.round(proposal.budget * 100)
-
         const payment = await stripe.paymentIntents.create({
             amount: fullAmount,
             currency: 'usd',
@@ -35,6 +34,16 @@ const create = async (req, res) => {
     }
 }
 
+const confirm = async (req, res) => {
+    try {
+        const { projectProposalId, paymentId } = req.body
+        const updateStatus = await ProjectProposal.findByIdAndUpdate( projectProposalId, { status: 'In Progress', paymentStatus: 'Paid', paymentId: paymentIntentId }, { new: true })
+        res.json(updateStatus)
+    } catch (error) {
+        res.status(500).json({ error: error.message})
+    }
+}
+
 module.exports = {
-    create,
+    create, confirm,
 }
