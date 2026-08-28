@@ -40,6 +40,14 @@ const projectProposalSchema = new mongoose.Schema({
         type: String,
         enum: ['Pending', 'Accepted', 'Rejected', 'In Progress', 'Completed'],
         default: 'Pending'
+    },
+    paymentStatus: {
+        type: String, 
+        enum: ['Paid', 'Unpaid'],
+        default: 'Unpaid',
+    },
+    paymentId: {
+        type: String,
     }
 }, {timestamps: true})
 
