@@ -17,10 +17,10 @@ const projectProposalSchema = new mongoose.Schema({
     budget: {
         type: Number,
         required: true,
+        min: 1,
     },
     features: {
         type: String,
-        // enum: ['ill add it later', 'ill add it later'],
         required: true,
     },
     theme: {
@@ -48,6 +48,7 @@ const projectProposalSchema = new mongoose.Schema({
     },
     paymentId: {
         type: String,
+        default: null,
     }
 }, {timestamps: true})
 

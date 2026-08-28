@@ -15,17 +15,19 @@ const create = async (req, res) => {
             return res.status(400).json({ error: 'payment is not allowed for unaccepted project proposals.'})
         }
 
-        if(proposal.businessOwner.toString() !== req.user._id) {
-            return res.status(403).json({ error: 'you are not authorised to pay for this project proposal'})
+        const ownerId = (proposal.businessOwner?._id || proposal.businessOwner).toString()
+
+        const currentUserId = (req.user?._id || req.user).toString()
+
+        if (ownerId !== currentUserId) {
+            return res.status(403).json({ error: 'You cannot pay for this project proposal'})
         }
 
-        const fullAmount = Math.round(proposal.budget * 100)
         const payment = await stripe.paymentIntents.create({
-            amount: fullAmount,
+            amount: proposal.budget * 100,
             currency: 'usd',
             metadata: {
-                projectProposalId: proposal._id.toString(),
-                businessOwnerId: req.user._id
+                proposalId: proposal._id.toString(),
             }
         })
         res.json({ clientSecret: payment.client_secret })
@@ -37,7 +39,7 @@ const create = async (req, res) => {
 const confirm = async (req, res) => {
     try {
         const { projectProposalId, paymentId } = req.body
-        const updateStatus = await ProjectProposal.findByIdAndUpdate( projectProposalId, { status: 'In Progress', paymentStatus: 'Paid', paymentId: paymentIntentId }, { new: true })
+        const updateStatus = await ProjectProposal.findByIdAndUpdate( projectProposalId, { status: 'In Progress', paymentStatus: 'Paid', paymentId: paymentId }, { new: true })
         res.json(updateStatus)
     } catch (error) {
         res.status(500).json({ error: error.message})

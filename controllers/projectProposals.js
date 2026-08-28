@@ -15,7 +15,13 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     try {
-        const projectProposal = await ProjectProposal.find({})
+        const currentUserId = req.user._id || req.user.id
+        const projectProposal = await ProjectProposal.find({
+            $or: [
+                { businessOwner: currentUserId},
+                { developer: currentUserId},
+            ]
+        })
         res.status(200).json(projectProposal)
     } catch (error) {
         res.status(500).json({ error: error.message })
