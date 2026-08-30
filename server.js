@@ -13,7 +13,7 @@ const { Server } = require('socket.io')
 const server = http.createServer(app)
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost: 5174', //im not sure but i think i'll have to change this later for deployment
+    origin: 'http://localhost:5173', //im not sure but i think i'll have to change this later for deployment
   }
 })
 
@@ -77,6 +77,22 @@ app.post('/payment/confirmPayment', verifyToken, paymentCtrl.confirm)
 
 io.on('connection', (socket) => {
   console.log('Socket connected: ', socket.id)
+
+  socket.on('chat message', (messageData) => {
+    console.log('chat event received: ', messageData)
+
+    const newMessage = {
+      id: `${socket.id}-${Date.now()}`,
+      username: messageData.username,
+      text: messageData.text,
+    }
+
+    console.log('chat event broadcast', newMessage)
+
+    io.emit('chat message', newMessage)
+  })
+
+
 
   socket.on('disconnected', () => {
     console.log('Socket disconnected: ', socket.id)
