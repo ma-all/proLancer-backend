@@ -7,6 +7,16 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const morgan = require('morgan')
+const http = require('http')
+const { Server } = require('socket.io')
+
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173', //im not sure but i think i'll have to change this later for deployment
+    methods: ['GET', 'POST']
+  }
+})
 
 const PORT = process.env.PORT ? process.env.PORT : "3000"
 
@@ -66,7 +76,39 @@ app.post('/chat/:chatId/messages', verifyToken, chatCtrl.sendMessage)
 app.post('/payment/createPayment', verifyToken, paymentCtrl.create)
 app.post('/payment/confirmPayment', verifyToken, paymentCtrl.confirm)
 
-app.listen(PORT, () => {
+io.on('connection', (socket) => {
+  console.log('Socket connected: ', socket.id)
+
+  socket.on('join_chat', (chatId) => {
+    socket.join(chatId)
+    console.log(`socket ${socket.id} join ${chatId}`)
+  })
+
+  socket.on('send_message', ({ chatId, savedMessage }) => {
+    socket.to(chatId).emit('chat message', savedMessage)
+  })
+
+  // socket.on('chat message', (messageData) => {
+  //   console.log('chat event received: ', messageData)
+
+  //   const newMessage = {
+  //     id: `${socket.id}-${Date.now()}`,
+  //     username: messageData.username,
+  //     text: messageData.text,
+  //   }
+
+  //   console.log('chat event broadcast', newMessage)
+
+  //   io.emit('chat message', newMessage)
+  // })
+
+
+  socket.on('disconnect', () => {
+    console.log('Socket disconnected: ', socket.id)
+  })
+})
+
+server.listen(PORT, () => {
   console.log(`The express app is ready on port ${PORT}! 😀`)
 })
 
