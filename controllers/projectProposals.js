@@ -22,6 +22,8 @@ const index = async (req, res) => {
                 { developer: currentUserId},
             ]
         })
+        .populate('businessOwner', 'username name email')
+        .populate('developer', 'username name email')
         res.status(200).json(projectProposal)
     } catch (error) {
         res.status(500).json({ error: error.message })
