@@ -38,41 +38,24 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))
 
-// Routes go here
-// app.get('/auth/sign-token', authCtrl.signToken)
-// app.get('/auth/verify-token', authCtrl.verifyToken)
 app.post('/auth/sign-up', authCtrl.signUp)
 app.post('/auth/sign-in', authCtrl.signIn)
-
-// app.get('/users', verifyToken, usersCtrl.index)
-
-//user router
-// app.post('/user', verifyToken, usersCtrl.create)
 app.get('/user/developer', verifyToken, usersCtrl.indexDev)
 app.get('/user/:userId', verifyToken, usersCtrl.show)
 app.put('/user/:userId', verifyToken, usersCtrl.update)
 app.delete('/user/:userId/github', verifyToken, usersCtrl.deleteGithubLink)
 app.delete('/user/:userId/deployed', verifyToken, usersCtrl.deleteDeployedLink)
 app.delete('/user/:userId/skill', verifyToken, usersCtrl.deleteSkill)
-// app.delete('/user/:userId', verifyToken, usersCtrl.deletee)
-
-//project proposal routes
 app.post('/projectProposal', verifyToken, projectProposalCtrl.create)
 app.get('/projectProposal', verifyToken, projectProposalCtrl.index)
 app.get('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.show)
 app.put('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.update)
 app.delete('/projectProposal/:projectProposalId', verifyToken, projectProposalCtrl.deleteProjectProposal)
 app.put('/projectProposal/:projectProposalId/status', verifyToken, projectProposalCtrl.updateStatus)
-
-//chat routes
 app.post('/chat', verifyToken, chatCtrl.create)
 app.get('/chat', verifyToken, chatCtrl.index)
 app.get('/chat/:chatId', verifyToken, chatCtrl.show)
-// app.put('/chat/:chatId', verifyToken, chatCtrl.update)
-// app.delete('/chat/:chatId', verifyToken, chatCtrl.deleteChat)
 app.post('/chat/:chatId/messages', verifyToken, chatCtrl.sendMessage)
-
-//payment 
 app.post('/payment/createPayment', verifyToken, paymentCtrl.create)
 app.post('/payment/confirmPayment', verifyToken, paymentCtrl.confirm)
 
@@ -87,21 +70,6 @@ io.on('connection', (socket) => {
   socket.on('send_message', ({ chatId, savedMessage }) => {
     socket.to(chatId).emit('chat message', savedMessage)
   })
-
-  // socket.on('chat message', (messageData) => {
-  //   console.log('chat event received: ', messageData)
-
-  //   const newMessage = {
-  //     id: `${socket.id}-${Date.now()}`,
-  //     username: messageData.username,
-  //     text: messageData.text,
-  //   }
-
-  //   console.log('chat event broadcast', newMessage)
-
-  //   io.emit('chat message', newMessage)
-  // })
-
 
   socket.on('disconnect', () => {
     console.log('Socket disconnected: ', socket.id)

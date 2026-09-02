@@ -2,10 +2,8 @@ const ProjectProposal = require('../models/projectProposal')
 
 const create = async (req, res) => {
     try {
-
         const userId = req.user._id || req.user.payload?._id
         req.body.businessOwner = userId
-
         const projectProposal = await ProjectProposal.create(req.body)
         res.status(201).json(projectProposal)
     } catch (error) {
@@ -39,7 +37,6 @@ const show = async (req, res) => {
     }
 }
 
-//this one is for the business owner in case they edit the details 
 const update = async (req, res) => {
     try {
         const updateProjectProposal = await ProjectProposal.findByIdAndUpdate(req.params.projectProposalId, req.body, { new: true })
@@ -52,7 +49,6 @@ const update = async (req, res) => {
     }
 }
 
-//for developer to accept or reject a project proposal
 const updateStatus = async (req, res) => {
     try {
         const { status } = req.body
