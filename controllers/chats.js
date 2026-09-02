@@ -6,7 +6,18 @@ const create = async (req, res) => {
         if (!userId) {
             return res.status(401).json({ error: 'user id is missing' })
         }
-        const targetId = req.body.developerId
+        const targetId = req.body.businessOwnerId || req.body.developerId || req.body.targetId
+        
+        const targetRole = req.body.role || req.body.developerId || req.body.targetId
+
+        if(!targetId) {
+            return res.status(400).json({error: 'target id is required'})
+        }
+
+        if (userId.toString() === targetId.toString()) {
+            return res.status(400).json({ error: 'Cannot start a chat with yourself'})
+        }
+
         let chat = await Chat.findOne({
             $or: [
                 { businessOwnerId: userId, developerId: targetId },
@@ -15,9 +26,10 @@ const create = async (req, res) => {
 
         })
         if (!chat) {
+            const isTargetDeveloper = targetRole === 'developer' || Boolean(req.body.developerId && req.body.developerId !== userId.toString())
             chat = await Chat.create({
-                businessOwnerId: userId,
-                developerId: targetId,
+                businessOwnerId: isTargetDeveloper? userId : targetId,
+                developerId: isTargetDeveloper? targetId : userId,
             })
         }
         res.status(201).json(chat)
