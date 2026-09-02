@@ -8,8 +8,13 @@ _A digital marketplace that connect business owners with freelance developers to
 https://github.com/ma-all/proLancer-frontend
 
 ## Screenshots of Business Owners Interface
+![alt text](image.png)
+![alt text](image-3.png)
 
 ## Screenshots of Developer Interface
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-5.png)
 
 ## Technologies Used
 - **React**
